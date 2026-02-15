@@ -1,0 +1,43 @@
+.magic_button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    /* Space for the border */
+    background: linear-gradient(135deg, #a855f7, #f97316);
+    box-shadow: 0 0 0px rgba(168, 85, 247, 0.6), 0 0 0px rgba(249, 115, 22, 0.4);
+    animation: pulse 30s infinite;
+    aspect-ratio: 1;
+}
+
+.magic_button>button {
+    /* Ensure the button stays on top */
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
+    /* Override IconButton white bg */
+    color: white !important;
+    /* Ensure icon is white */
+    box-shadow: none !important;
+    /* Remove inner shadow */
+    margin: 0 !important;
+    /* Remove margin */
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(168, 85, 247, 0.6), 0 0 5px rgba(249, 115, 22, 0.4);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 5px rgba(168, 85, 247, 0.8), 0 0 5px rgba(249, 115, 22, 0.6);
+        transform: scale(1.01);
+    }
+
+    100% {
+        box-shadow: 0 0 5px rgba(168, 85, 247, 0.6), 0 0 5px rgba(249, 115, 22, 0.4);
+        transform: scale(1);
+    }
+}

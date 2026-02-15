@@ -7,6 +7,7 @@ import UndoButton from "./UndoButton";
 import RedoButton from "./RedoButton";
 import ClearButton from "./ClearButton";
 import SelectionButton from "./SelectionButton";
+import MagicButton from "./MagicButton";
 import { CanvasMode, LayerType, CanvasState, Color } from "../../types"; // Import Color
 import styles from "./index.module.css";
 
@@ -19,6 +20,7 @@ type Props = {
   canRedo: boolean;
   setLastUsedColor: (color: Color) => void; // Add setLastUsedColor
   clearCanvas: () => void;
+  onAiClick: () => void;
 };
 
 export default function ToolsBar({
@@ -30,6 +32,7 @@ export default function ToolsBar({
   canRedo,
   setLastUsedColor,
   clearCanvas,
+  onAiClick,
 }: Props) {
   return (
     <div className={styles.tools_panel_container}>
@@ -81,6 +84,10 @@ export default function ToolsBar({
                 layerType: LayerType.Ellipse,
               })
             }
+          />
+          <MagicButton
+            isActive={false}
+            onClick={onAiClick}
           />
         </div>
 

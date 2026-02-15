@@ -42,6 +42,7 @@ import MultiplayerGuides from "./components/MultiplayerGuides";
 import Path from "./components/Path";
 import ToolsBar from "./components/ToolsBar";
 import Branding from "./components/Branding";
+import AiModal from "./components/AiModal";
 
 const MAX_LAYERS = 100;
 
@@ -564,6 +565,111 @@ function Canvas() {
     ]
   );
 
+
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+
+  const generateDrawing = useMutation(
+    async ({ storage, setMyPresence }, prompt: string, apiKey: string) => {
+      try {
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt, apiKey }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to generate drawing");
+        }
+
+        const data = await response.json();
+        const { strokes } = data;
+
+        if (!strokes || !Array.isArray(strokes)) return;
+
+        const liveLayers = storage.get("layers");
+        const liveLayerIds = storage.get("layerIds");
+
+        // Center of the screen approximation or random
+        // Ideally we should use camera, but let's just use 0,0 center with some offset
+        const centerX = camera.x + window.innerWidth / 2;
+        const centerY = camera.y + window.innerHeight / 2;
+
+        for (const stroke of strokes) {
+          // Stroke format: { points: [[x, y], ...], color: string }
+          if (!stroke.points || stroke.points.length < 2) continue;
+
+          const layerId = nanoid();
+
+          // Normalize points to be centered
+          const rawPoints = stroke.points.map(([x, y]: number[]) => [
+            x + centerX - 250, // simple offset
+            y + centerY - 250,
+            0.5 // pressure
+          ]);
+
+          // Calculate bounding box
+          let minX = Infinity;
+          let minY = Infinity;
+          let maxX = -Infinity;
+          let maxY = -Infinity;
+
+          for (const [x, y] of rawPoints) {
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+          }
+
+          const width = maxX - minX;
+          const height = maxY - minY;
+
+          // Adjust points to be relative to the layer position (minX, minY)
+          const relativePoints = rawPoints.map(([x, y, pressure]: number[]) => [
+            x - minX,
+            y - minY,
+            pressure
+          ]);
+
+          // Parse color
+          let color = { r: 0, g: 0, b: 0 };
+          if (stroke.color && typeof stroke.color === 'string') {
+            let hex = stroke.color.replace('#', '').trim();
+            if (hex.length === 3) {
+              hex = hex.split('').map((c: string) => c + c).join('');
+            }
+            if (hex.length === 6) {
+              color = {
+                r: parseInt(hex.substring(0, 2), 16),
+                g: parseInt(hex.substring(2, 4), 16),
+                b: parseInt(hex.substring(4, 6), 16),
+              };
+            }
+          }
+
+          const layer = new LiveObject({
+            type: LayerType.Path,
+            x: minX,
+            y: minY,
+            height: height,
+            width: width,
+            fill: color,
+            points: relativePoints,
+          });
+
+          liveLayerIds.push(layerId);
+          liveLayers.set(layerId, layer);
+        }
+
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
+    },
+    [camera]
+  );
+
   return (
     <>
       <div className={styles.canvas}>
@@ -648,6 +754,12 @@ function Canvas() {
         canRedo={canRedo}
         setLastUsedColor={setLastUsedColor}
         clearCanvas={clearCanvas}
+        onAiClick={() => setIsAiModalOpen(true)}
+      />
+      <AiModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+        onGenerate={generateDrawing}
       />
     </>
   );
