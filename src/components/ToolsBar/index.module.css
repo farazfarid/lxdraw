@@ -1,0 +1,31 @@
+.tools_panel_container {
+  position: absolute;
+  bottom: 24px;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.tools_panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  gap: 8px;
+  /* Add gap between sections if they are laid out horizontally */
+}
+
+.tools_panel_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 12px; Remove padding as buttons have their own margins */
+}
+
+.seperator {
+  display: none;
+  /* Hide separators as requested */
+}

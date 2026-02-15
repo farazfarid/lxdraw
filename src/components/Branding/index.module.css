@@ -1,0 +1,41 @@
+.container {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    pointer-events: auto;
+    /* Capture clicks to prevent drawing behind */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.app_name {
+    font-weight: 700;
+    font-size: 16px;
+    color: #111;
+    line-height: 1;
+}
+
+.user_name {
+    font-family: 'Kalam', cursive;
+    font-size: 14px;
+    color: #666;
+    margin-top: 2px;
+}
