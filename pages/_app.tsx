@@ -22,8 +22,7 @@ function App({ Component, pageProps }: AppProps) {
         />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" />
         <link rel="stylesheet" href="https://liveblocks.io/stylesheets/examples/nextjs-whiteboard-advanced.css" />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" type="image/x-icon" />
-        <link href="/favicon.ico" rel="icon" sizes="16x16" type="image/x-icon" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
       <Component {...pageProps} />
     </LiveblocksProvider>
