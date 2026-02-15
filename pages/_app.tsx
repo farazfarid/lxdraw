@@ -18,7 +18,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>LXDraw</title>
         <meta
           name="viewport"
-          content="width=device-width, user-scalable=no"
+          content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
         />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" />
         <link rel="stylesheet" href="https://liveblocks.io/stylesheets/examples/nextjs-whiteboard-advanced.css" />

@@ -13,9 +13,17 @@
   --color-white: #fff;
   --shadow-popup: 0px 2px 4px rgba(0, 0, 0, 0.1),
     0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
   background-color: var(--color-surface-canvas);
   /**
     https://stackoverflow.com/questions/48124372/pointermove-event-not-working-with-touch-why-not
@@ -33,8 +41,9 @@
 }
 
 .renderer_svg {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .selection_net {
@@ -46,8 +55,9 @@
 
 .loading {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   place-content: center;
   place-items: center;
@@ -92,4 +102,16 @@
   font-family: 'Kalam', cursive;
   font-size: 32px;
   color: #333;
+}
+
+@media (max-width: 768px) {
+  .empty_state_icon {
+    width: 84px;
+    height: 84px;
+    margin-bottom: 12px;
+  }
+
+  .empty_state_text {
+    font-size: 24px;
+  }
 }

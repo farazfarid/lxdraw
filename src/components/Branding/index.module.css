@@ -1,7 +1,7 @@
 .container {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: max(12px, env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
     display: flex;
     align-items: center;
     gap: 12px;
@@ -13,6 +13,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     user-select: none;
     -webkit-user-select: none;
+    z-index: 20;
 }
 
 .icon {
@@ -38,4 +39,25 @@
     font-size: 14px;
     color: #666;
     margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 10px;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .app_name {
+        font-size: 14px;
+    }
+
+    .user_name {
+        display: none;
+    }
 }

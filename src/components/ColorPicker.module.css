@@ -2,6 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
+  gap: 2px;
   max-width: 121px;
   padding-right: 8px;
   margin-right: 8px;
@@ -22,4 +24,30 @@
   height: 20px;
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 32px);
+    gap: 4px;
+    width: auto;
+    max-width: 68px;
+    padding-right: 0;
+    margin-right: 0;
+    border-right: none;
+    justify-content: center;
+  }
+
+  .color_swatch_button,
+  .color_swatch_button_active {
+    width: 32px;
+    height: 32px;
+  }
+
+  .color_swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 22px;
+  }
 }

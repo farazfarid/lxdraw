@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ColorPicker from "../ColorPicker"; // Import ColorPicker
 import PencilButton from "./PencilButton";
 import EraserButton from "./EraserButton";
@@ -34,15 +35,31 @@ export default function ToolsBar({
   clearCanvas,
   onAiClick,
 }: Props) {
+  const [isMobileCollapsed, setIsMobileCollapsed] = useState(false);
+
   return (
     <div className={styles.tools_panel_container}>
-      <div className={styles.tools_panel}>
-        <div className={styles.tools_panel_section}>
+      <button
+        type="button"
+        className={`${styles.mobile_toggle} ${isMobileCollapsed ? styles.mobile_toggle_collapsed : ""}`}
+        aria-label={isMobileCollapsed ? "Expand toolbar" : "Collapse toolbar"}
+        aria-expanded={!isMobileCollapsed}
+        onClick={() => setIsMobileCollapsed((value) => !value)}
+      >
+        {isMobileCollapsed ? "<" : ">"}
+      </button>
+
+      <div
+        className={`${styles.tools_panel} ${isMobileCollapsed ? styles.tools_panel_collapsed : ""}`}
+      >
+        <div className={`${styles.tools_panel_section} ${styles.color_section}`}>
           {/* Always visible ColorPicker */}
           <ColorPicker onChange={setLastUsedColor} />
         </div>
 
-        <div className={styles.tools_panel_section}>
+        <div
+          className={`${styles.tools_panel_section} ${styles.primary_tools_section}`}
+        >
           <SelectionButton
             isActive={
               canvasState.mode === CanvasMode.None ||
@@ -91,7 +108,7 @@ export default function ToolsBar({
           />
         </div>
 
-        <div className={styles.tools_panel_section}>
+        <div className={`${styles.tools_panel_section} ${styles.history_section}`}>
           <UndoButton onClick={undo} disabled={!canUndo} />
           <RedoButton onClick={redo} disabled={!canRedo} />
           <ClearButton

@@ -7,7 +7,6 @@ export default function Home() {
     <> {/* Added React Fragment to allow multiple top-level elements */}
       <Head>
         <title>LXDraw - Collaborative Whiteboard</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
           content="LXDraw is a minimalist, collaborative whiteboard for sketching and sharing ideas in real-time."
